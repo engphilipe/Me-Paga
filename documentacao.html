@@ -69,6 +69,8 @@
             gap: 10px;
         }
 
+        .brand-img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; }
+
         .btn-outline {
             border: 1px solid var(--primary);
             padding: 0.5rem 1rem;
@@ -191,15 +193,21 @@
         }
         .theme-toggle:hover { transform: scale(1.1); }
         .theme-toggle svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 1rem; text-align: center; }
+            .container { margin: 1.5rem auto; padding: 1.5rem; }
+            h1 { font-size: 2rem; }
+            .step { flex-direction: column; gap: 1rem; }
+            .theme-toggle { bottom: 15px; right: 15px; width: 45px; height: 45px; }
+        }
     </style>
 </head>
 <body>
 
     <nav>
         <a href="index.html" class="logo">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--primary)">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-            </svg>
+            <img src="assets/logo.png" alt="Logo" class="brand-img" />
             Me Paga - Docs
         </a>
         <a href="login.html" class="btn-outline">Acessar Sistema</a>

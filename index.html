@@ -100,6 +100,8 @@
             color: var(--primary);
         }
 
+        .brand-img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; }
+
         .nav-actions {
             display: flex;
             align-items: center;
@@ -692,8 +694,16 @@
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .hero h1 { font-size: 2.8rem; }
-            .hero-buttons { flex-direction: column; }
+            nav { padding: 1rem 5%; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+            .nav-actions { width: 100%; justify-content: center; }
+            .hero { padding: 8rem 5% 4rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; text-align: center; }
+            .features { padding: 4rem 5%; }
+            .how-it-works { padding: 4rem 5%; }
+            .pricing { padding: 4rem 5%; }
+            .theme-toggle { bottom: 15px; right: 15px; width: 45px; height: 45px; }
         }
     </style>
 </head>
@@ -701,9 +711,7 @@
 
     <nav>
         <a href="index.html" class="logo">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-            </svg>
+            <img src="assets/logo.png" alt="Logo" class="brand-img" />
             Me Paga
         </a>
         <div class="nav-links">
@@ -902,9 +910,7 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <div class="logo">
-                    <svg viewBox="0 0 24 24" fill="var(--primary)">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-                    </svg>
+                    <img src="assets/logo.png" alt="Logo" class="brand-img" />
                     Me Paga
                 </div>
                 <p>Trazendo segurança governamental e automação corporativa para a gestão de recebimentos via PIX de empreendedores em todo o Brasil.</p>

@@ -68,10 +68,11 @@
             gap: 10px;
         }
 
-        .brand svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--primary);
+        .brand-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            object-fit: cover;
         }
 
         .nav-item {
@@ -178,15 +179,26 @@
         .theme-toggle:hover { transform: scale(1.1); }
         .theme-toggle svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; padding: 1rem; border-right: none; border-bottom: 1px solid var(--border); justify-content: center; gap: 0.5rem; }
+            .brand { padding: 0 1rem 1rem; border-bottom: none; margin-bottom: 0; width: 100%; justify-content: center; }
+            .nav-item { padding: 0.5rem 1rem; margin: 0; border-right: none; border-radius: 8px; flex: 1 1 auto; justify-content: center; font-size: 0.85rem; }
+            .nav-item.active { border-bottom: 3px solid var(--primary); background: rgba(249, 115, 22, 0.08); border-right: none; }
+            .nav-item span { display: none; }
+            .main-content { padding: 1.5rem 1rem; }
+            header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .user-profile { width: 100%; justify-content: space-between; }
+            .chart-container { height: 300px; padding: 1rem; }
+            .theme-toggle { bottom: 15px; right: 15px; width: 45px; height: 45px; }
+        }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
         <div class="brand">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-            </svg>
+            <img src="assets/logo.png" alt="Logo" class="brand-img" />
             Me Paga
         </div>
         <a href="dashboard.html" class="nav-item">

@@ -206,9 +206,16 @@
             z-index: 9999;
             transition: all 0.3s;
         }
+        .brand-img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
         .theme-toggle:hover { transform: scale(1.1); }
         .theme-toggle svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
+        @media (max-width: 768px) {
+            .auth-container { width: 90%; margin: 4rem auto; padding: 2rem; }
+            .auth-hero { display: none; }
+            body { padding: 1rem; }
+            .theme-toggle { bottom: 15px; right: 15px; width: 45px; height: 45px; }
+        }
     </style>
 </head>
 <body>
@@ -222,9 +229,7 @@
 
     <div class="auth-container" id="login-form">
         <div class="logo">
-            <svg viewBox="0 0 24 24" fill="var(--primary)">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-            </svg>
+            <img src="assets/logo.png" alt="Logo" class="brand-img" />
             Me Paga
         </div>
         
@@ -250,9 +255,7 @@
 
     <div class="auth-container" id="register-form" style="display: none;">
         <div class="logo">
-            <svg viewBox="0 0 24 24" fill="var(--primary)">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-            </svg>
+            <img src="assets/logo.png" alt="Logo" class="brand-img" />
             Me Paga
         </div>
         
