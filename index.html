@@ -6,11 +6,12 @@
     <title>Me Paga - Segurança Inteligente contra Fraudes PIX</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #f97316;
             --primary-dark: #ea580c;
+            --primary-light: #ffedd5;
             --secondary: #fb923c;
             --dark: #0f172a;
             --light: #f8fafc;
@@ -39,15 +40,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            transition: all 0.3s ease;
         }
 
         .logo {
@@ -58,19 +59,26 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
         .logo svg {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             fill: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
         }
 
         .nav-links a {
             color: var(--text);
             text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.3s ease;
         }
 
@@ -78,100 +86,296 @@
             color: var(--primary);
         }
 
-        .btn-outline {
-            border: 2px solid var(--primary);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            color: var(--primary) !important;
-            transition: all 0.3s;
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .btn-outline:hover {
+        .btn-ghost {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-ghost:hover {
+            background: var(--gray);
+            color: var(--primary);
+        }
+
+        .btn-primary-sm {
             background: var(--primary);
             color: var(--white) !important;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.2);
         }
 
-        /* Hero Section */
+        .btn-primary-sm:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3);
+        }
+
+        /* Hero Section (Lauda 1) */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 8rem 5% 4rem;
-            background: radial-gradient(circle at center, rgba(249, 115, 22, 0.08) 0%, #ffffff 70%);
+            padding: 7rem 5% 4rem;
+            background: radial-gradient(circle at top right, var(--primary-light) 0%, transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(249, 115, 22, 0.05) 0%, #ffffff 50%);
             position: relative;
         }
 
-        .hero-content {
-            max-width: 850px;
-            z-index: 1;
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .hero-text {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .badge-new {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .badge-new span {
+            background: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-size: 0.75rem;
         }
 
         .hero h1 {
-            font-size: 4.5rem;
+            font-size: 4rem;
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1.5rem;
             color: var(--dark);
-            animation: slideUp 0.8s ease-out;
+            letter-spacing: -1px;
         }
 
-        .hero h1 span {
+        .hero h1 span.highlight {
             color: var(--primary);
+            position: relative;
+        }
+
+        .hero h1 span.highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--primary-light);
+            z-index: -1;
+            border-radius: 4px;
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: var(--text-muted);
             margin-bottom: 2.5rem;
-            animation: slideUp 1s ease-out;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            line-height: 1.6;
+            max-width: 90%;
         }
 
-        .btn-primary {
-            display: inline-block;
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-large {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             background: var(--primary);
             color: var(--white);
-            padding: 1.2rem 3rem;
+            padding: 1.1rem 2.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-size: 1.1rem;
             font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             border: none;
-            cursor: pointer;
-            animation: slideUp 1.2s ease-out;
             box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2);
         }
 
-        .btn-primary:hover {
+        .btn-large:hover {
             transform: translateY(-3px);
             background: var(--primary-dark);
             box-shadow: 0 15px 25px rgba(249, 115, 22, 0.3);
             color: white;
         }
 
+        .btn-secondary-large {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--white);
+            color: var(--dark);
+            padding: 1.1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+
+        .btn-secondary-large:hover {
+            background: var(--gray);
+            border-color: #cbd5e1;
+        }
+
+        /* Hero Graphic */
+        .hero-graphic {
+            position: relative;
+            animation: fadeInRight 1s ease-out;
+            perspective: 1000px;
+        }
+
+        .mockup-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+            transform: rotateY(-10deg) rotateX(5deg);
+            position: relative;
+            z-index: 2;
+        }
+
+        .mockup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--gray);
+            padding-bottom: 1rem;
+        }
+
+        .mockup-header-title {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mockup-header-title svg { fill: var(--primary); width: 20px; height: 20px; }
+
+        .mockup-qr {
+            width: 200px;
+            height: 200px;
+            background: var(--gray);
+            margin: 0 auto 1.5rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #cbd5e1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mockup-qr::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, transparent 40%, rgba(249,115,22,0.1) 50%, transparent 60%);
+            background-size: 200% 200%;
+            animation: scan 3s linear infinite;
+        }
+
+        .mockup-qr svg {
+            width: 80px;
+            height: 80px;
+            stroke: var(--text-muted);
+        }
+
+        .mockup-details {
+            text-align: center;
+        }
+
+        .mockup-details h4 { font-size: 2rem; color: var(--dark); margin-bottom: 0.5rem; }
+        .mockup-details p { color: var(--text-muted); font-size: 0.9rem; }
+
+        .mockup-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 1.5rem;
+        }
+
+        .mockup-status svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
         /* Section Titles */
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 3.5rem;
+            margin-bottom: 1rem;
             color: var(--dark);
             font-weight: 800;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Features Section */
         .features {
             padding: 6rem 5%;
-            background: var(--gray);
+            background: var(--white);
         }
 
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2.5rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -180,34 +384,56 @@
         .card {
             background: var(--white);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border-color: var(--primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08);
+            border-color: rgba(249, 115, 22, 0.3);
         }
 
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover::before { transform: scaleX(1); }
+
         .card-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(249, 115, 22, 0.1);
-            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            background: var(--primary-light);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: var(--primary);
-            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .card h3 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
             color: var(--dark);
         }
@@ -215,125 +441,133 @@
         .card p {
             color: var(--text-muted);
             line-height: 1.6;
+            font-size: 1rem;
         }
 
         /* Como Funciona Section */
         .how-it-works {
-            padding: 6rem 5%;
-            background: var(--white);
+            padding: 8rem 5%;
+            background: var(--gray);
         }
 
         .steps-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
+            position: relative;
+        }
+
+        /* Vertical Line */
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 2px; height: 100%;
+            background: var(--border);
+            z-index: 1;
         }
 
         .step-row {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 3rem;
-        }
-
-        .step-row:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .step-text {
-            flex: 1;
-        }
-
-        .step-number {
-            font-size: 5rem;
-            font-weight: 800;
-            color: rgba(249, 115, 22, 0.1);
-            line-height: 1;
-            margin-bottom: -1rem;
+            margin-bottom: 6rem;
             position: relative;
-            z-index: 0;
+            z-index: 2;
         }
 
-        .step-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            position: relative;
-            z-index: 1;
-        }
+        .step-row:last-child { margin-bottom: 0; }
 
-        .step-text p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
+        .step-row:nth-child(even) { flex-direction: row-reverse; }
 
-        .step-image {
-            flex: 1;
-            background: var(--gray);
+        .step-content {
+            width: 45%;
+            background: var(--white);
+            padding: 2.5rem;
             border-radius: 20px;
-            padding: 3rem;
-            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             border: 1px solid var(--border);
+            position: relative;
         }
 
-        .step-image-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            display: inline-block;
-            font-weight: 600;
-            color: var(--primary);
-            border: 1px solid var(--border);
+        /* Pointer arrow */
+        .step-row:nth-child(odd) .step-content::after {
+            content: ''; position: absolute; top: 50%; right: -10px; transform: translateY(-50%) rotate(45deg);
+            width: 20px; height: 20px; background: var(--white); border-top: 1px solid var(--border); border-right: 1px solid var(--border);
         }
+        .step-row:nth-child(even) .step-content::after {
+            content: ''; position: absolute; top: 50%; left: -10px; transform: translateY(-50%) rotate(-135deg);
+            width: 20px; height: 20px; background: var(--white); border-top: 1px solid var(--border); border-right: 1px solid var(--border);
+        }
+
+        .step-number-circle {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px; height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 0 0 10px var(--gray);
+            z-index: 3;
+        }
+
+        .step-icon {
+            width: 48px; height: 48px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+        .step-icon svg { width: 24px; height: 24px; stroke: var(--primary); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .step-content h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--dark); }
+        .step-content p { color: var(--text-muted); line-height: 1.6; }
 
         /* Footer */
         footer {
             background: var(--dark);
             color: var(--light);
-            padding: 4rem 5% 2rem;
+            padding: 5rem 5% 2rem;
         }
 
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
         }
+
+        .footer-brand { max-width: 350px; }
+        .footer-brand .logo { color: white; margin-bottom: 1.5rem; }
+        .footer-brand p { color: #94a3b8; line-height: 1.6; font-size: 0.95rem; }
 
         .footer-col h4 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 1.5rem;
             color: var(--white);
+            font-weight: 600;
         }
 
-        .footer-col p {
-            color: #94a3b8;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 1rem; }
         .footer-links a {
             color: #94a3b8;
             text-decoration: none;
             transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .footer-links a:hover {
-            color: var(--primary);
-        }
+        .footer-links a:hover { color: var(--primary); }
 
         .footer-bottom {
             text-align: center;
@@ -345,24 +579,40 @@
 
         /* Animations */
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
         }
 
         /* Responsive */
+        @media (max-width: 992px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+            .hero h1 { font-size: 3.5rem; }
+            .hero p { margin: 0 auto 2.5rem; }
+            .hero-buttons { justify-content: center; }
+            .steps-container::before { left: 30px; }
+            .step-row, .step-row:nth-child(even) { flex-direction: column; align-items: flex-end; }
+            .step-content { width: calc(100% - 80px); }
+            .step-number-circle { left: 30px; }
+            .step-content::after { display: none; }
+            .footer-content { grid-template-columns: 1fr; gap: 2.5rem; }
+        }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
             .nav-links { display: none; }
-            .step-row { flex-direction: column !important; text-align: center; }
-            .step-text { order: 1; }
-            .step-image { order: 2; width: 100%; }
-            .step-number { text-align: center; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero-buttons { flex-direction: column; }
         }
     </style>
 </head>
@@ -374,112 +624,181 @@
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
             </svg>
             Me Paga
-        </div>
+        </a>
         <div class="nav-links">
             <a href="#como-funciona">Como Funciona</a>
             <a href="#vantagens">Vantagens</a>
-            <a href="documentacao.html">API & Docs</a>
-            <a href="login.html" class="btn-outline">Entrar</a>
+            <a href="documentacao.html">Para Devs</a>
+        </div>
+        <div class="nav-actions">
+            <a href="login.html" class="btn-ghost">Fazer Login</a>
+            <a href="login.html" class="btn-primary-sm">Criar Conta Grátis</a>
         </div>
     </nav>
 
     <section class="hero">
-        <div class="hero-content">
-            <h1>O Fim dos Golpes de PIX Falso no seu <span>Negócio</span></h1>
-            <p>Automatize suas cobranças de forma inteligente. Geramos QR Codes dinâmicos exclusivos para cada venda e validamos o pagamento sistemicamente, sem depender de comprovantes manuais e fraudáveis.</p>
-            <a href="login.html" class="btn-primary">Criar Conta Grátis</a>
+        <div class="hero-container">
+            <div class="hero-text">
+                <div class="badge-new">
+                    <span>NOVO</span> API de Webhooks Liberada
+                </div>
+                <h1>O Fim dos Golpes de PIX no seu <span class="highlight">Negócio</span></h1>
+                <p>Automatize a validação das suas cobranças. Geramos QR Codes dinâmicos rastreáveis e confirmamos o pagamento sistemicamente, sem depender de comprovantes manuais e fraudáveis.</p>
+                <div class="hero-buttons">
+                    <a href="login.html" class="btn-large">Começar Gratuitamente</a>
+                    <a href="#como-funciona" class="btn-secondary-large">Ver como funciona</a>
+                </div>
+            </div>
+
+            <div class="hero-graphic">
+                <div class="mockup-card">
+                    <div class="mockup-header">
+                        <div class="mockup-header-title">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                            </svg>
+                            Cobrança Ativa
+                        </div>
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">#1029</span>
+                    </div>
+                    
+                    <div class="mockup-qr">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM15 15h6v6h-6zM10 3h4M10 9h4M3 10h6M15 10h6M3 14h6M15 14h6M10 15h4M10 21h4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+
+                    <div class="mockup-details">
+                        <h4>R$ 150,00</h4>
+                        <p>Aguardando pagamento de João Silva</p>
+                        <div class="mockup-status">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Pagamento Confirmado
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="como-funciona" class="how-it-works">
-        <h2 class="section-title">Como o Me Paga Funciona?</h2>
+        <h2 class="section-title">O Processo Simplificado</h2>
+        <p class="section-subtitle">Diga adeus ao trabalho manual. O Me Paga cuida de toda a esteira de cobrança desde a geração até a conciliação bancária.</p>
+        
         <div class="steps-container">
             <div class="step-row">
-                <div class="step-text">
-                    <div class="step-number">01</div>
-                    <h3>Você gera a cobrança</h3>
-                    <p>Através do nosso Painel Web ou via integração com sua automação de WhatsApp (API), você insere o valor e o nome do cliente. Nosso sistema gera um código PIX único e rastreável instantaneamente.</p>
+                <div class="step-number-circle">1</div>
+                <div class="step-content">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    </div>
+                    <h3>Geração do Pedido</h3>
+                    <p>Através do nosso Painel ou via API REST, você ou seu bot inserem os dados do cliente e o valor exato da venda. Um ID único e imutável é criado para esta transação específica.</p>
                 </div>
-                <div class="step-image">
-                    <div class="step-image-box">📱 Criando: Pedido #102 - R$ 150,00</div>
-                </div>
+                <div style="width: 45%;"></div>
             </div>
             
             <div class="step-row">
-                <div class="step-text">
-                    <div class="step-number">02</div>
-                    <h3>O cliente realiza o pagamento</h3>
-                    <p>O cliente lê o QR Code ou utiliza a chave Copia e Cola fornecida. Como a chave é atrelada àquela transação exata, é impossível utilizar comprovantes antigos ou valores adulterados.</p>
+                <div class="step-number-circle">2</div>
+                <div class="step-content">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <h3>Código PIX Dinâmico</h3>
+                    <p>O sistema gera imediatamente um QR Code e um código Copia e Cola associados àquele ID. Por ser dinâmico, o cliente não consegue editar o valor a ser pago em seu app do banco.</p>
                 </div>
-                <div class="step-image">
-                    <div class="step-image-box" style="border-color: var(--primary);">📷 Lendo QR Code do PIX</div>
-                </div>
+                <div style="width: 45%;"></div>
             </div>
 
             <div class="step-row">
-                <div class="step-text">
-                    <div class="step-number">03</div>
-                    <h3>Baixa automática e segura</h3>
-                    <p>No exato milissegundo que o banco confirma a liquidação na sua conta, nosso sistema altera o status da venda de "Pendente" para "Pago" e avisa sua equipe ou o seu chatbot via Webhook. Zero intervenção humana.</p>
+                <div class="step-number-circle">3</div>
+                <div class="step-content">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <h3>Baixa e Webhook</h3>
+                    <p>Quando o pagamento cai na conta, o Banco Central notifica nossa plataforma. Em milissegundos, enviamos um alerta via Webhook para liberar seu produto automaticamente.</p>
                 </div>
-                <div class="step-image">
-                    <div class="step-image-box" style="background: var(--success); color: white; border: none;">✅ Pagamento Confirmado!</div>
-                </div>
+                <div style="width: 45%;"></div>
             </div>
         </div>
     </section>
 
     <section id="vantagens" class="features">
-        <h2 class="section-title">Vantagens Exclusivas</h2>
+        <h2 class="section-title">Por que escolher o Me Paga?</h2>
+        <p class="section-subtitle">Desenvolvido para lojas e infoprodutores que precisam de alta segurança sem comprometer a conversão.</p>
+        
         <div class="cards-container">
             <div class="card">
-                <div class="card-icon">🔐</div>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
                 <h3>Anti-Fraude Nativo</h3>
-                <p>Abandone a chave PIX estática do seu CNPJ/CPF. Geramos um código único vinculado ao ID exato da transação, anulando completamente o golpe do comprovante falso.</p>
+                <p>Anule completamente o golpe do comprovante falso. Sem leitura manual, sem erros humanos. A validação é criptográfica e direta com a instituição bancária.</p>
             </div>
             <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>Sem Depender de Humanos</h3>
-                <p>A liberação do produto ou serviço não depende de um atendente "olhar o comprovante" no WhatsApp. Tudo ocorre em tempo real, 24 horas por dia, 7 dias por semana.</p>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <h3>Conversão Imediata</h3>
+                <p>Libere acesso a sistemas, e-books ou confirme pedidos de delivery de forma automática e instantânea, garantindo a melhor experiência para o seu cliente.</p>
             </div>
             <div class="card">
-                <div class="card-icon">🤖</div>
-                <h3>Pronto para Desenvolvedores</h3>
-                <p>Nossa API Restful e nosso sistema de Webhooks foram desenhados para que a integração com Chatbots (Typebot, Chatwoot, etc) seja feita em questão de minutos.</p>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <h3>Pronto para Devs</h3>
+                <p>Nossa API Restful e sistema de Webhooks foram desenhados com a mentalidade <i>developer-first</i>. Integre com Chatwoot, Typebot ou seu ERP em minutos.</p>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-col">
-                <div class="logo" style="color: white; margin-bottom: 1rem;">
-                    <svg viewBox="0 0 24 24" style="fill: var(--primary);">
+            <div class="footer-brand">
+                <div class="logo">
+                    <svg viewBox="0 0 24 24" fill="var(--primary)">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
                     </svg>
                     Me Paga
                 </div>
-                <p>Trazendo segurança e automação inteligente para recebimentos via PIX no Brasil.</p>
+                <p>Trazendo segurança governamental e automação corporativa para a gestão de recebimentos via PIX de empreendedores em todo o Brasil.</p>
             </div>
             <div class="footer-col">
-                <h4>Produto</h4>
+                <h4>Navegação</h4>
                 <ul class="footer-links">
                     <li><a href="#como-funciona">Como Funciona</a></li>
-                    <li><a href="#vantagens">Vantagens e Benefícios</a></li>
-                    <li><a href="documentacao.html">Documentação da API</a></li>
+                    <li><a href="#vantagens">Benefícios Exclusivos</a></li>
+                    <li><a href="documentacao.html">Documentação Técnica</a></li>
+                    <li><a href="login.html">Painel Administrativo</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Contato</h4>
+                <h4>Fale Conosco</h4>
                 <ul class="footer-links">
-                    <li><a href="#">suporte@mepaga.com.br</a></li>
-                    <li><a href="#">(11) 99999-9999</a></li>
-                    <li><a href="#">São Paulo, SP - Brasil</a></li>
+                    <li>
+                        <a href="#">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            contato@mepaga.com.br
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            (11) 98765-4321
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" style="pointer-events: none;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            São Paulo, SP - Hackathon
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 Me Paga Tecnologia. Todos os direitos reservados. Hackathon Edition.
+            &copy; 2026 Me Paga Inc. Criado com dedicação para apresentação.
         </div>
     </footer>
 
