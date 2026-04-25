@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +21,14 @@
             --warning: #f59e0b;
         }
 
+        body.dark-mode {
+            --dark-bg: #0f172a;
+            --panel-bg: #1e293b;
+            --border: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -34,6 +41,7 @@
             color: var(--text);
             display: flex;
             min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .sidebar {
@@ -44,6 +52,7 @@
             display: flex;
             flex-direction: column;
             box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .brand {
@@ -74,6 +83,11 @@
             font-weight: 500;
             transition: all 0.3s ease;
             cursor: pointer;
+        }
+
+        .nav-item svg {
+            width: 20px; height: 20px;
+            stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
         }
 
         .nav-item:hover,
@@ -110,6 +124,7 @@
             border-radius: 50px;
             border: 1px solid var(--border);
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .avatar {
@@ -137,6 +152,7 @@
             border-radius: 16px;
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .card-header {
@@ -149,6 +165,10 @@
             font-weight: 500;
         }
 
+        .card-header svg {
+            width: 20px; height: 20px; stroke: var(--primary); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+        }
+
         .card-value {
             font-size: 2rem;
             font-weight: 700;
@@ -158,6 +178,7 @@
         .trend.positive { color: var(--success); }
         .trend.warning { color: var(--warning); }
         .trend { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+        .trend svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         .section-header {
             display: flex;
@@ -175,9 +196,30 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
         }
 
         .btn:hover { background: var(--primary-dark); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn-outline:hover { background: rgba(249, 115, 22, 0.1); }
 
         .table-container {
             background: var(--panel-bg);
@@ -185,6 +227,7 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         table {
@@ -204,10 +247,10 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background: #f1f5f9;
+            background: rgba(128, 128, 128, 0.05);
         }
 
-        tbody tr:hover { background: #f8fafc; }
+        tbody tr:hover { background: rgba(128, 128, 128, 0.05); }
 
         .badge {
             padding: 0.25rem 0.75rem;
@@ -229,7 +272,7 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(5px);
             display: none;
             align-items: center;
@@ -242,7 +285,7 @@
             border: 1px solid var(--border);
             border-radius: 16px;
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
             padding: 2rem;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
@@ -261,13 +304,14 @@
 
         .form-group input {
             width: 100%;
-            background: #f1f5f9;
+            background: rgba(128, 128, 128, 0.05);
             border: 1px solid var(--border);
             color: var(--text);
             padding: 0.75rem 1rem;
             border-radius: 8px;
             outline: none;
             font-size: 1rem;
+            transition: all 0.3s;
         }
 
         .form-group input:focus { border-color: var(--primary); }
@@ -287,11 +331,43 @@
             cursor: pointer;
         }
 
-        .btn-cancel:hover { background: #f1f5f9; }
+        .btn-cancel:hover { background: rgba(128, 128, 128, 0.05); }
 
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 9999;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+        .theme-toggle svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .copy-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .copy-box input {
+            flex: 1;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
     </style>
 </head>
-
 <body>
 
     <aside class="sidebar">
@@ -302,17 +378,21 @@
             Me Paga
         </div>
         <a href="dashboard.html" class="nav-item active">
-            <span>📊</span> Visão Geral
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Visão Geral
         </a>
         <a href="relatorios.html" class="nav-item">
-            <span>📈</span> Relatórios
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            Relatórios
         </a>
         <a href="configuracoes.html" class="nav-item">
-            <span>⚙️</span> Configurações
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Configurações
         </a>
         <div style="flex:1"></div>
         <a href="index.html" class="nav-item">
-            <span>🚪</span> Sair
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sair
         </a>
     </aside>
 
@@ -329,15 +409,15 @@
             <div class="card">
                 <div class="card-header">
                     <span>Total Recebido (Hoje)</span>
-                    <span>💰</span>
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
                 <div class="card-value" id="total-recebido">R$ 0,00</div>
-                <div class="trend positive"><span>↑</span> 12% vs ontem</div>
+                <div class="trend positive"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg> 12% vs ontem</div>
             </div>
             <div class="card">
                 <div class="card-header">
                     <span>Cobranças Pendentes</span>
-                    <span>⏳</span>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 </div>
                 <div class="card-value" id="total-pendentes">0</div>
                 <div class="trend warning">Aguardando pagamento</div>
@@ -345,7 +425,7 @@
             <div class="card">
                 <div class="card-header">
                     <span>Ticket Médio</span>
-                    <span>📈</span>
+                    <svg viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
                 </div>
                 <div class="card-value" id="ticket-medio">R$ 0,00</div>
                 <div class="trend">Média das transações</div>
@@ -354,7 +434,10 @@
 
         <div class="section-header">
             <h2>Transações Recentes</h2>
-            <button class="btn" onclick="abrirModal()">+ Nova Cobrança</button>
+            <button class="btn" onclick="abrirModal()">
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Nova Cobrança
+            </button>
         </div>
 
         <div class="table-container">
@@ -397,8 +480,33 @@
         </div>
     </div>
 
+    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar Tema">
+        <svg id="theme-icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
     <script>
         let transacoesAtuais = JSON.parse(localStorage.getItem('mepaga_transactions')) || [];
+
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-icon').innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            }
+        }
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', initTheme);
 
         async function carregarTransacoes() {
             if (transacoesAtuais.length === 0) {
@@ -491,20 +599,51 @@
                 created_at: new Date().toISOString()
             };
 
+            const mockCopiaCola = `00020126580014br.gov.bcb.pix0136${novaTransacao.id}5204000053039865405${valor.toFixed(2)}5802BR5913MePaga LTDA6009SAO PAULO62070503***6304ABCD`;
+
             const modalBody = document.querySelector('.modal');
             modalBody.innerHTML = `
-                <h2 style="color: var(--success); text-align: center;">Cobrança Gerada!</h2>
+                <h2 style="color: var(--success); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    Cobrança Gerada!
+                </h2>
                 <div style="text-align: center; margin: 1.5rem 0;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mepaga_${novaTransacao.id}" alt="QR Code" style="border-radius: 10px; border: 4px solid var(--border);">
-                    <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.95rem;">Mostre ou envie este QR Code para <strong>${nome}</strong></p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(mockCopiaCola)}" alt="QR Code" style="border-radius: 10px; border: 4px solid var(--border);">
+                    <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.95rem;">Mostre este QR Code para <strong>${nome}</strong> ou use o Copia e Cola abaixo:</p>
                 </div>
-                <button class="btn" style="width: 100%;" onclick="fecharModalQRAposGerar()">Concluir e Fechar</button>
+                
+                <div class="form-group copy-box">
+                    <input type="text" id="pix-copia-cola" value="${mockCopiaCola}" readonly>
+                    <button class="btn-outline" id="btn-copiar" onclick="copiarPix()" style="width: auto;">Copiar</button>
+                </div>
+
+                <button class="btn" style="width: 100%; margin-top: 1rem;" onclick="fecharModalQRAposGerar()">Concluir e Fechar</button>
             `;
 
             transacoesAtuais.unshift(novaTransacao);
             localStorage.setItem('mepaga_transactions', JSON.stringify(transacoesAtuais));
             renderizarTabela(transacoesAtuais);
             atualizarCards(transacoesAtuais);
+        }
+
+        function copiarPix() {
+            const copyText = document.getElementById("pix-copia-cola");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // Para mobile
+            navigator.clipboard.writeText(copyText.value);
+            
+            const btnCopiar = document.getElementById("btn-copiar");
+            btnCopiar.innerText = "Copiado!";
+            btnCopiar.style.background = "rgba(16, 185, 129, 0.1)";
+            btnCopiar.style.color = "var(--success)";
+            btnCopiar.style.borderColor = "var(--success)";
+            
+            setTimeout(() => {
+                btnCopiar.innerText = "Copiar";
+                btnCopiar.style.background = "transparent";
+                btnCopiar.style.color = "var(--primary)";
+                btnCopiar.style.borderColor = "var(--primary)";
+            }, 2000);
         }
 
         function fecharModalQRAposGerar() {
@@ -531,5 +670,4 @@
         carregarTransacoes();
     </script>
 </body>
-
 </html>

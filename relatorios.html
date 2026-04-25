@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +22,14 @@
             --warning: #f59e0b;
         }
 
+        body.dark-mode {
+            --dark-bg: #0f172a;
+            --panel-bg: #1e293b;
+            --border: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -35,6 +42,7 @@
             color: var(--text);
             display: flex;
             min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .sidebar {
@@ -45,6 +53,7 @@
             display: flex;
             flex-direction: column;
             box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .brand {
@@ -75,6 +84,11 @@
             font-weight: 500;
             transition: all 0.3s ease;
             cursor: pointer;
+        }
+
+        .nav-item svg {
+            width: 20px; height: 20px;
+            stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
         }
 
         .nav-item:hover,
@@ -111,6 +125,7 @@
             border-radius: 50px;
             border: 1px solid var(--border);
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .avatar {
@@ -139,11 +154,32 @@
             padding: 1.5rem;
             height: 400px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            transition: background-color 0.3s, border-color 0.3s;
         }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 9999;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+        .theme-toggle svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
     </style>
 </head>
-
 <body>
 
     <aside class="sidebar">
@@ -154,17 +190,21 @@
             Me Paga
         </div>
         <a href="dashboard.html" class="nav-item">
-            <span>📊</span> Visão Geral
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Visão Geral
         </a>
         <a href="relatorios.html" class="nav-item active">
-            <span>📈</span> Relatórios
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            Relatórios
         </a>
         <a href="configuracoes.html" class="nav-item">
-            <span>⚙️</span> Configurações
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Configurações
         </a>
         <div style="flex:1"></div>
         <a href="index.html" class="nav-item">
-            <span>🚪</span> Sair
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sair
         </a>
     </aside>
 
@@ -183,10 +223,49 @@
         <div class="chart-container">
             <canvas id="salesChart"></canvas>
         </div>
-
     </main>
 
+    <button class="theme-toggle" onclick="toggleTheme()" title="Alternar Tema">
+        <svg id="theme-icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
     <script>
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-icon').innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            const isDark = document.body.classList.contains('dark-mode');
+            
+            if (isDark) {
+                localStorage.setItem('theme', 'dark');
+                icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            }
+            
+            if(window.myChartInstance) {
+                const newColor = isDark ? '#f8fafc' : '#0f172a';
+                const newGrid = isDark ? '#334155' : '#e2e8f0';
+                window.myChartInstance.options.plugins.legend.labels.color = newColor;
+                window.myChartInstance.options.scales.x.grid.color = newGrid;
+                window.myChartInstance.options.scales.y.grid.color = newGrid;
+                window.myChartInstance.options.scales.x.ticks.color = newColor;
+                window.myChartInstance.options.scales.y.ticks.color = newColor;
+                window.myChartInstance.update();
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', initTheme);
+
         function renderChart() {
             const ctx = document.getElementById('salesChart').getContext('2d');
             
@@ -199,7 +278,11 @@
             const labels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom (Hoje)'];
             const data = [1200, 1900, 800, 2400, 3100, 1500, totalFaturamentoLocal > 0 ? totalFaturamentoLocal : 2100];
 
-            new Chart(ctx, {
+            const isDark = document.body.classList.contains('dark-mode');
+            const textColor = isDark ? '#f8fafc' : '#0f172a';
+            const gridColor = isDark ? '#334155' : '#e2e8f0';
+
+            window.myChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -221,25 +304,25 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { labels: { color: '#0f172a' } }
+                        legend: { labels: { color: textColor } }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: '#e2e8f0' },
-                            ticks: { color: '#64748b' }
+                            grid: { color: gridColor },
+                            ticks: { color: textColor }
                         },
                         x: {
-                            grid: { color: '#e2e8f0' },
-                            ticks: { color: '#64748b' }
+                            grid: { color: gridColor },
+                            ticks: { color: textColor }
                         }
                     }
                 }
             });
         }
 
-        renderChart();
+        // Wait a tick for theme script to set classes before rendering chart
+        setTimeout(renderChart, 50);
     </script>
 </body>
-
 </html>
