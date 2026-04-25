@@ -194,8 +194,15 @@
     <script>
         function renderChart() {
             const ctx = document.getElementById('salesChart').getContext('2d');
-            const labels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
-            const data = [1200, 1900, 800, 2400, 3100, 1500, 2100];
+            
+            const transacoes = JSON.parse(localStorage.getItem('mepaga_transactions')) || [];
+            let totalFaturamentoLocal = 0;
+            transacoes.forEach(t => {
+                totalFaturamentoLocal += parseFloat(t.amount);
+            });
+
+            const labels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom (Hoje)'];
+            const data = [1200, 1900, 800, 2400, 3100, 1500, totalFaturamentoLocal > 0 ? totalFaturamentoLocal : 2100];
 
             new Chart(ctx, {
                 type: 'line',

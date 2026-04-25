@@ -416,24 +416,17 @@
             console.warn("Supabase não inicializado.");
         }
 
-        let transacoesAtuais = [];
+        let transacoesAtuais = JSON.parse(localStorage.getItem('mepaga_transactions')) || [];
 
         async function carregarTransacoes() {
-            try {
-                const { data, error } = await supabase.from('bills')
-                    .select('id, name, amount, is_paid, created_at')
-                    .order('created_at', { ascending: false })
-                    .limit(10);
-                if (error) throw error;
-                transacoesAtuais = data || [];
-            } catch (err) {
-                // Fallback (Mock)
+            if (transacoesAtuais.length === 0) {
                 transacoesAtuais = [
                     { id: '1a2b3c4d-5678-90ef', name: 'Maria Oliveira (Pedido #102)', amount: 150.00, is_paid: true, created_at: new Date().toISOString() },
                     { id: '8f7e6d5c-4321-09ba', name: 'Carlos Santos (Pedido #103)', amount: 45.50, is_paid: false, created_at: new Date().toISOString() },
                     { id: '9a8b7c6d-1234-56ef', name: 'Ana Costa (Pedido #104)', amount: 320.00, is_paid: false, created_at: new Date().toISOString() },
                     { id: '5f4e3d2c-1234-56ef', name: 'Pedro Alves (Pedido #101)', amount: 890.00, is_paid: true, created_at: new Date(Date.now() - 86400000).toISOString() }
                 ];
+                localStorage.setItem('mepaga_transactions', JSON.stringify(transacoesAtuais));
             }
             renderizarTabela(transacoesAtuais);
             atualizarCards(transacoesAtuais);
@@ -533,6 +526,7 @@
             } catch (e) { }
 
             transacoesAtuais.unshift(novaTransacao);
+            localStorage.setItem('mepaga_transactions', JSON.stringify(transacoesAtuais));
             renderizarTabela(transacoesAtuais);
             atualizarCards(transacoesAtuais);
         }
