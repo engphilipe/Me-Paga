@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me Paga - Dashboard de Gestão</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd6;
+            --secondary: #764ba2;
+            --dark-bg: #0f172a;
+            --panel-bg: rgba(30, 41, 59, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 0 2rem 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .nav-item {
+            padding: 1rem 2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+            border-right: 3px solid var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem 3rem;
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--panel-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Tabs */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .trend.positive { color: var(--success); }
+        .trend.warning { color: var(--warning); }
+        .trend { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+
+        /* Table Area */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: var(--primary-dark); }
+
+        .table-container {
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge.pendente { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge.pago { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+        .id-text {
+            font-family: monospace;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 450px;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal h2 { margin-bottom: 1.5rem; }
+        
+        /* Formulários e Configs */
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem; font-weight: 500;}
+        .form-group input {
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+        }
+        .form-group input:focus { border-color: var(--primary); }
+        .form-group p.desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
+        
+        .modal-actions { display: flex; justify-content: flex-end; gap: 1rem; }
+        .btn-cancel { background: transparent; border: 1px solid var(--border); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; }
+        .btn-cancel:hover { background: rgba(255,255,255,0.05); }
+
+        .config-section {
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .config-section h3 { margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+
+        /* Gráfico */
+        .chart-container {
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <svg viewBox="0 0 24 24" fill="url(#gradient-brand)">
+                <defs>
+                    <linearGradient id="gradient-brand" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#667eea" />
+                        <stop offset="100%" stop-color="#764ba2" />
+                    </linearGradient>
+                </defs>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+            Me Paga
+        </div>
+        <a class="nav-item active" onclick="switchTab('tab-visao-geral', this)">
+            <span>📊</span> Visão Geral
+        </a>
+        <a class="nav-item" onclick="switchTab('tab-relatorios', this)">
+            <span>📈</span> Relatórios
+        </a>
+        <a class="nav-item" onclick="switchTab('tab-config', this)">
+            <span>⚙️</span> Configurações
+        </a>
+        <div style="flex:1"></div>
+        <a href="index.html" class="nav-item">
+            <span>🚪</span> Sair
+        </a>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <h1 id="page-title">Dashboard</h1>
+            <div class="user-profile">
+                <div class="avatar">EM</div>
+                <span>Empresa Demo</span>
+            </div>
+        </header>
+
+        <!-- ABA VISÃO GERAL -->
+        <div id="tab-visao-geral" class="tab-content active">
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <span>Total Recebido (Hoje)</span>
+                        <span>💰</span>
+                    </div>
+                    <div class="card-value" id="total-recebido">R$ 0,00</div>
+                    <div class="trend positive"><span>↑</span> 12% vs ontem</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span>Cobranças Pendentes</span>
+                        <span>⏳</span>
+                    </div>
+                    <div class="card-value" id="total-pendentes">0</div>
+                    <div class="trend warning">Aguardando pagamento</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span>Ticket Médio</span>
+                        <span>📈</span>
+                    </div>
+                    <div class="card-value" id="ticket-medio">R$ 0,00</div>
+                    <div class="trend">Média das transações</div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>Transações Recentes</h2>
+                <button class="btn" onclick="abrirModal()">+ Nova Cobrança</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID da Transação</th>
+                            <th>Cliente / Descrição</th>
+                            <th>Valor</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-transacoes">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-muted);">Carregando transações...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ABA RELATÓRIOS -->
+        <div id="tab-relatorios" class="tab-content">
+            <div class="section-header">
+                <h2>Desempenho de Vendas</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="salesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ABA CONFIGURAÇÕES -->
+        <div id="tab-config" class="tab-content">
+            <div class="config-section">
+                <h3>Chave de API (Chatbot)</h3>
+                <div class="form-group">
+                    <label>Sua Chave Atual</label>
+                    <input type="text" value="mp_test_8f7d6e5c4b3a21" readonly style="color: var(--success); font-family: monospace;">
+                    <p class="desc">Utilize esta chave no header Authorization das suas requisições.</p>
+                </div>
+                <button class="btn btn-cancel" onclick="alert('Uma nova chave foi gerada. Não se esqueça de atualizar seu bot!')">Gerar Nova Chave</button>
+            </div>
+
+            <div class="config-section">
+                <h3>Webhook Bancário</h3>
+                <div class="form-group">
+                    <label>URL de Callback</label>
+                    <input type="url" id="webhook-url" placeholder="https://seu-chatbot.com/webhook/mepaga" value="https://meu-sistema.com/api/webhook">
+                    <p class="desc">Enviaremos um POST para esta URL sempre que um pagamento PIX for liquidado.</p>
+                </div>
+                <button class="btn" onclick="salvarWebhook()">Salvar Configurações</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal Nova Cobrança -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <h2>Gerar Nova Cobrança</h2>
+            <div class="form-group">
+                <label for="cliente">Nome do Cliente</label>
+                <input type="text" id="cliente" placeholder="Ex: João Silva">
+            </div>
+            <div class="form-group">
+                <label for="valor">Valor (R$)</label>
+                <input type="number" id="valor" step="0.01" placeholder="0.00">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+                <button class="btn" onclick="gerarCobranca()">Gerar QR Code</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab System
+        function switchTab(tabId, element) {
+            // Remove active from all tabs and nav items
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            // Add active to selected
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+
+            // Update title
+            const titleMap = {
+                'tab-visao-geral': 'Visão Geral',
+                'tab-relatorios': 'Relatórios Financeiros',
+                'tab-config': 'Configurações de Integração'
+            };
+            document.getElementById('page-title').innerText = titleMap[tabId];
+
+            // Render chart if opening reports
+            if(tabId === 'tab-relatorios') {
+                renderChart();
+            }
+        }
+
+        // Simula salvamento de webhook para o hackathon
+        function salvarWebhook() {
+            const btn = document.querySelector('#tab-config .btn');
+            btn.innerText = "Salvando...";
+            setTimeout(() => {
+                btn.innerText = "Salvar Configurações";
+                alert("Configurações de Webhook salvas com sucesso!");
+            }, 800);
+        }
+
+        // Configuração do Supabase
+        const SUPABASE_URL = 'http://127.0.0.1:54321';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlZmF1bHQiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTY4MDAwMDAwMCwiZXhwIjoyMDAwMDAwMDAwfQ.something'; 
+
+        let supabase;
+        try {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch (e) {
+            console.warn("Supabase não inicializado.");
+        }
+
+        async function carregarTransacoes() {
+            try {
+                const { data, error } = await supabase.from('bills')
+                    .select('id, name, amount, is_paid, created_at')
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                if (error) throw error;
+                renderizarTabela(data || []);
+                atualizarCards(data || []);
+            } catch (err) {
+                // Fallback (Mock)
+                const mockData = [
+                    { id: '1a2b3c4d-5678-90ef', name: 'Maria Oliveira (Pedido #102)', amount: 150.00, is_paid: true, created_at: new Date().toISOString() },
+                    { id: '8f7e6d5c-4321-09ba', name: 'Carlos Santos (Pedido #103)', amount: 45.50, is_paid: false, created_at: new Date().toISOString() },
+                    { id: '9a8b7c6d-1234-56ef', name: 'Ana Costa (Pedido #104)', amount: 320.00, is_paid: false, created_at: new Date().toISOString() },
+                    { id: '5f4e3d2c-1234-56ef', name: 'Pedro Alves (Pedido #101)', amount: 890.00, is_paid: true, created_at: new Date(Date.now() - 86400000).toISOString() }
+                ];
+                renderizarTabela(mockData);
+                atualizarCards(mockData);
+            }
+        }
+
+        function renderizarTabela(transacoes) {
+            const tbody = document.getElementById('tabela-transacoes');
+            tbody.innerHTML = '';
+            
+            if(transacoes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Nenhuma transação encontrada.</td></tr>';
+                return;
+            }
+
+            transacoes.forEach(t => {
+                const isPaid = t.is_paid;
+                const statusHtml = isPaid 
+                    ? `<span class="badge pago">Pago</span>` 
+                    : `<span class="badge pendente">Pendente</span>`;
+                
+                const dataFormatada = new Date(t.created_at).toLocaleDateString('pt-BR', {
+                    day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit'
+                });
+
+                const idCurto = t.id.substring(0, 8);
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="id-text">#${idCurto}</td>
+                        <td>${t.name || 'Cliente'}</td>
+                        <td>R$ ${parseFloat(t.amount).toFixed(2).replace('.', ',')}</td>
+                        <td>${dataFormatada}</td>
+                        <td>${statusHtml}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function atualizarCards(transacoes) {
+            let totalRecebido = 0;
+            let pendentes = 0;
+            let somaValores = 0;
+
+            transacoes.forEach(t => {
+                somaValores += parseFloat(t.amount);
+                if(t.is_paid) {
+                    totalRecebido += parseFloat(t.amount);
+                } else {
+                    pendentes++;
+                }
+            });
+
+            const media = transacoes.length > 0 ? (somaValores / transacoes.length) : 0;
+
+            document.getElementById('total-recebido').innerText = `R$ ${totalRecebido.toFixed(2).replace('.', ',')}`;
+            document.getElementById('total-pendentes').innerText = pendentes;
+            document.getElementById('ticket-medio').innerText = `R$ ${media.toFixed(2).replace('.', ',')}`;
+        }
+
+        function abrirModal() { document.getElementById('modal').style.display = 'flex'; }
+        
+        function fecharModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('cliente').value = '';
+            document.getElementById('valor').value = '';
+        }
+
+        async function gerarCobranca() {
+            const nome = document.getElementById('cliente').value;
+            const valor = parseFloat(document.getElementById('valor').value);
+            if(!nome || isNaN(valor)) { alert("Preencha todos os campos corretamente."); return; }
+
+            try {
+                await supabase.from('bills').insert([
+                    { name: nome, amount: valor, is_paid: false, due_date: new Date().toISOString() }
+                ]);
+            } catch(e) {}
+            
+            alert(`Cobrança de R$ ${valor.toFixed(2)} para ${nome} gerada com sucesso!`);
+            fecharModal();
+            carregarTransacoes();
+            setTimeout(() => location.reload(), 1500); 
+        }
+
+        // Chart.js Setup
+        let chartInstance = null;
+        function renderChart() {
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            if(chartInstance) return; // already rendered
+
+            // Mock data for the chart to show progression over the last 7 days
+            const labels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+            const data = [1200, 1900, 800, 2400, 3100, 1500, 2100];
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Faturamento (R$)',
+                        data: data,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#764ba2',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#764ba2'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#f8fafc' } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Init
+        carregarTransacoes();
+    </script>
+</body>
+</html>

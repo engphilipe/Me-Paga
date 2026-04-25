@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(export PGPASSWORD='M54t*jtUV%B@txj')",
+      "Bash(psql \"postgresql://postgres:M54t*jtUV%B@txj@aws0-evalfsreq-fyg-feh-bkt-vktttccqomahhzzhqgri.supabase.co:5432/postgres\" -c \"\\\\dt\")",
+      "Bash(curl -s \"https://db.vktttccqomahhzzhqgri.supabase.co\")"
+    ]
+  }
+}

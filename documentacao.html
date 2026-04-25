@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação da API - Me Paga</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --dark-bg: #0f172a;
+            --panel-bg: rgba(30, 41, 59, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-family: monospace;
+            color: #e2e8f0;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: rgba(102, 126, 234, 0.2);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .alert {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .alert strong {
+            color: #f59e0b;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="#667eea">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+            Me Paga - Docs
+        </a>
+        <a href="login.html" class="btn-outline">Acessar Sistema</a>
+    </nav>
+
+    <div class="container">
+        <h1>Guia de Integração</h1>
+        <p>Aprenda como conectar o Me Paga ao seu fluxo de atendimento no WhatsApp para gerar cobranças PIX dinâmicas e automatizadas.</p>
+
+        <h2>Visão Geral da Arquitetura</h2>
+        <p>Nosso sistema funciona de forma assíncrona. Seu Chatbot manda uma requisição com o valor para a nossa API, nós retornamos o QR Code. Quando o cliente paga, o Gateway avisa o nosso sistema via Webhook, e nós notificamos seu sistema do recebimento.</p>
+
+        <h2>Passo a Passo</h2>
+
+        <div class="step">
+            <div class="step-number">1</div>
+            <div>
+                <h3>Gerar Chave de API</h3>
+                <p>Acesse o <strong>Dashboard</strong> > <strong>Configurações</strong> e clique em "Gerar Nova Chave API". Utilize esta chave no Header de todas as requisições HTTP para a nossa API.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">2</div>
+            <div>
+                <h3>Criar a Cobrança via Chatbot</h3>
+                <p>Quando o cliente fechar a compra no WhatsApp, faça um <code>POST</code> para nosso endpoint enviando os dados do pedido.</p>
+                
+                <div class="code-block">
+POST https://api.mepaga.com.br/v1/cobrancas
+Authorization: Bearer SUA_CHAVE_API
+Content-Type: application/json
+
+{
+  "cliente": "João Silva",
+  "valor": 150.00,
+  "referencia": "pedido_102"
+}
+                </div>
+                <p>A API responderá com a imagem do QR Code e o código Pix Copia e Cola para você enviar ao cliente.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            <div>
+                <h3>Configurar Webhook de Confirmação</h3>
+                <p>Vá em <strong>Configurações</strong> e cadastre a URL de Webhook do seu Chatbot. Sempre que um PIX for pago com sucesso, nós enviaremos um `POST` para a sua URL avisando.</p>
+                <div class="code-block">
+POST https://seu-chatbot.com/webhook/mepaga
+
+{
+  "id_transacao": "1a2b3c4d",
+  "referencia": "pedido_102",
+  "status": "pago",
+  "valor_pago": 150.00
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="alert">
+            <strong>⚠️ Atenção à Segurança:</strong> Valide se a requisição que chega no seu Webhook realmente veio do IP do Me Paga ou valide o payload com a chave de assinatura disponível no seu Dashboard.
+        </div>
+
+    </div>
+
+</body>
+</html>

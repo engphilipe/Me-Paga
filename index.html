@@ -1,91 +1,300 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Me Paga - Página Inicial</title>
+    <title>Me Paga - Segurança Inteligente contra Fraudes PIX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd6;
+            --secondary: #764ba2;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            fill: url(#gradient);
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            color: var(--primary) !important;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white !important;
+        }
+
+        /* Hero Section */
+        .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .container {
             text-align: center;
-            padding: 2rem;
+            padding: 6rem 5% 2rem;
+            background: radial-gradient(circle at center, rgba(118, 75, 162, 0.2) 0%, rgba(15, 23, 42, 1) 70%);
+            position: relative;
         }
 
-        .logo {
-            width: 150px;
-            height: 150px;
-            background: #fff;
-            border-radius: 30px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.3;
+            border-radius: 50%;
+            top: 20%;
+            left: -100px;
+            z-index: -1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            filter: blur(150px);
+            opacity: 0.3;
+            border-radius: 50%;
+            bottom: 10%;
+            right: -50px;
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 2.5rem;
+            animation: slideUp 1s ease-out;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            animation: slideUp 1.2s ease-out;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            background: var(--dark);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            color: var(--primary);
+            font-size: 1.5rem;
         }
 
-        .logo svg {
-            width: 80px;
-            height: 80px;
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        h1 {
-            color: #fff;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        .card p {
+            color: #94a3b8;
+            line-height: 1.6;
         }
 
-        p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .btn {
-            display: inline-block;
-            background: #fff;
-            color: #667eea;
-            padding: 12px 30px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="logo">
-            <svg viewBox="0 0 24 24" fill="#667eea">
-                <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-            </svg>
-        </div>
-        <h1>Mateusinho Lindo</h1>
-        <p>Organize suas contas e nunca mais esqueça um pagamento</p>
-        <a href="#" class="btn">Começar</a>
-    </div>
-</body>
+    <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#667eea" />
+        <stop offset="100%" stop-color="#764ba2" />
+      </linearGradient>
+    </svg>
 
+    <nav>
+        <div class="logo">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+            Me Paga
+        </div>
+        <div class="nav-links">
+            <a href="documentacao.html">Documentação</a>
+            <a href="#como-funciona">Como Funciona</a>
+            <a href="login.html" class="btn-outline">Área da Empresa</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>O Fim dos Golpes de PIX Falso no seu Negócio</h1>
+            <p>Automatize suas cobranças via WhatsApp. Geramos QR Codes dinâmicos exclusivos para cada venda e validamos o pagamento sistemicamente, sem depender de comprovantes manuais.</p>
+            <a href="login.html" class="btn-primary">Acessar Sistema</a>
+        </div>
+    </section>
+
+    <section id="solucao" class="features">
+        <h2 class="section-title">Por que usar o Me Paga?</h2>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">🔐</div>
+                <h3>Autenticidade</h3>
+                <p>Abandone a chave PIX estática. Geramos um código único vinculado ao ID exato da transação daquela venda.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Validação Sistêmica</h3>
+                <p>A confirmação não depende de "olhar o comprovante". O sistema via Webhook avisa você apenas quando o dinheiro cair na conta.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>Integração Fácil</h3>
+                <p>Integre com o seu Chatbot de WhatsApp. Receba o valor do cliente e nós devolvemos o QR Code e o Copia-e-Cola automaticamente.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
 </html>
