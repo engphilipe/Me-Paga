@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,7 +82,8 @@
             cursor: pointer;
         }
 
-        .nav-item:hover, .nav-item.active {
+        .nav-item:hover,
+        .nav-item.active {
             color: var(--primary);
             background: rgba(102, 126, 234, 0.1);
             border-right: 3px solid var(--primary);
@@ -138,8 +140,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Cards */
@@ -175,9 +184,21 @@
             margin-bottom: 0.5rem;
         }
 
-        .trend.positive { color: var(--success); }
-        .trend.warning { color: var(--warning); }
-        .trend { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+        .trend.positive {
+            color: var(--success);
+        }
+
+        .trend.warning {
+            color: var(--warning);
+        }
+
+        .trend {
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
         /* Table Area */
         .section-header {
@@ -198,7 +219,9 @@
             transition: background 0.2s;
         }
 
-        .btn:hover { background: var(--primary-dark); }
+        .btn:hover {
+            background: var(--primary-dark);
+        }
 
         .table-container {
             background: var(--panel-bg);
@@ -213,7 +236,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             padding: 1rem 1.5rem;
             text-align: left;
             border-bottom: 1px solid var(--border);
@@ -225,11 +249,11 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
         }
 
         tbody tr:hover {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .badge {
@@ -240,20 +264,32 @@
             display: inline-block;
         }
 
-        .badge.pendente { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
-        .badge.pago { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge.pendente {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge.pago {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
 
         .id-text {
             font-family: monospace;
             color: var(--text-muted);
             font-size: 0.85rem;
         }
-        
+
         /* Modal */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(5px);
             display: none;
             align-items: center;
@@ -271,14 +307,26 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
         }
 
-        .modal h2 { margin-bottom: 1.5rem; }
-        
+        .modal h2 {
+            margin-bottom: 1.5rem;
+        }
+
         /* Formulários e Configs */
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem; font-weight: 500;}
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         .form-group input {
             width: 100%;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border);
             color: white;
             padding: 0.75rem 1rem;
@@ -286,12 +334,35 @@
             outline: none;
             font-size: 1rem;
         }
-        .form-group input:focus { border-color: var(--primary); }
-        .form-group p.desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
-        
-        .modal-actions { display: flex; justify-content: flex-end; gap: 1rem; }
-        .btn-cancel { background: transparent; border: 1px solid var(--border); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; }
-        .btn-cancel:hover { background: rgba(255,255,255,0.05); }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group p.desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
 
         .config-section {
             background: var(--panel-bg);
@@ -300,7 +371,12 @@
             padding: 2rem;
             margin-bottom: 2rem;
         }
-        .config-section h3 { margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+
+        .config-section h3 {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
 
         /* Gráfico */
         .chart-container {
@@ -312,6 +388,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <aside class="sidebar">
@@ -323,7 +400,8 @@
                         <stop offset="100%" stop-color="#764ba2" />
                     </linearGradient>
                 </defs>
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
             </svg>
             Me Paga
         </div>
@@ -398,7 +476,8 @@
                     </thead>
                     <tbody id="tabela-transacoes">
                         <tr>
-                            <td colspan="5" style="text-align: center; color: var(--text-muted);">Carregando transações...</td>
+                            <td colspan="5" style="text-align: center; color: var(--text-muted);">Carregando
+                                transações...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -421,17 +500,21 @@
                 <h3>Chave de API (Chatbot)</h3>
                 <div class="form-group">
                     <label>Sua Chave Atual</label>
-                    <input type="text" value="mp_test_8f7d6e5c4b3a21" readonly style="color: var(--success); font-family: monospace;">
+                    <input type="text" value="mp_test_8f7d6e5c4b3a21" readonly
+                        style="color: var(--success); font-family: monospace;">
                     <p class="desc">Utilize esta chave no header Authorization das suas requisições.</p>
                 </div>
-                <button class="btn btn-cancel" onclick="alert('Uma nova chave foi gerada. Não se esqueça de atualizar seu bot!')">Gerar Nova Chave</button>
+                <button class="btn btn-cancel"
+                    onclick="alert('Uma nova chave foi gerada. Não se esqueça de atualizar seu bot!')">Gerar Nova
+                    Chave</button>
             </div>
 
             <div class="config-section">
                 <h3>Webhook Bancário</h3>
                 <div class="form-group">
                     <label>URL de Callback</label>
-                    <input type="url" id="webhook-url" placeholder="https://seu-chatbot.com/webhook/mepaga" value="https://meu-sistema.com/api/webhook">
+                    <input type="url" id="webhook-url" placeholder="https://seu-chatbot.com/webhook/mepaga"
+                        value="https://meu-sistema.com/api/webhook">
                     <p class="desc">Enviaremos um POST para esta URL sempre que um pagamento PIX for liquidado.</p>
                 </div>
                 <button class="btn" onclick="salvarWebhook()">Salvar Configurações</button>
@@ -462,15 +545,12 @@
     <script>
         // Tab System
         function switchTab(tabId, element) {
-            // Remove active from all tabs and nav items
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
-            // Add active to selected
+
             document.getElementById(tabId).classList.add('active');
             element.classList.add('active');
 
-            // Update title
             const titleMap = {
                 'tab-visao-geral': 'Visão Geral',
                 'tab-relatorios': 'Relatórios Financeiros',
@@ -478,13 +558,11 @@
             };
             document.getElementById('page-title').innerText = titleMap[tabId];
 
-            // Render chart if opening reports
-            if(tabId === 'tab-relatorios') {
+            if (tabId === 'tab-relatorios') {
                 renderChart();
             }
         }
 
-        // Simula salvamento de webhook para o hackathon
         function salvarWebhook() {
             const btn = document.querySelector('#tab-config .btn');
             btn.innerText = "Salvando...";
@@ -494,9 +572,8 @@
             }, 800);
         }
 
-        // Configuração do Supabase
         const SUPABASE_URL = 'http://127.0.0.1:54321';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlZmF1bHQiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTY4MDAwMDAwMCwiZXhwIjoyMDAwMDAwMDAwfQ.something'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlZmF1bHQiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTY4MDAwMDAwMCwiZXhwIjoyMDAwMDAwMDAwfQ.something';
 
         let supabase;
         try {
@@ -505,6 +582,8 @@
             console.warn("Supabase não inicializado.");
         }
 
+        let transacoesAtuais = [];
+
         async function carregarTransacoes() {
             try {
                 const { data, error } = await supabase.from('bills')
@@ -512,41 +591,40 @@
                     .order('created_at', { ascending: false })
                     .limit(10);
                 if (error) throw error;
-                renderizarTabela(data || []);
-                atualizarCards(data || []);
+                transacoesAtuais = data || [];
             } catch (err) {
                 // Fallback (Mock)
-                const mockData = [
+                transacoesAtuais = [
                     { id: '1a2b3c4d-5678-90ef', name: 'Maria Oliveira (Pedido #102)', amount: 150.00, is_paid: true, created_at: new Date().toISOString() },
                     { id: '8f7e6d5c-4321-09ba', name: 'Carlos Santos (Pedido #103)', amount: 45.50, is_paid: false, created_at: new Date().toISOString() },
                     { id: '9a8b7c6d-1234-56ef', name: 'Ana Costa (Pedido #104)', amount: 320.00, is_paid: false, created_at: new Date().toISOString() },
                     { id: '5f4e3d2c-1234-56ef', name: 'Pedro Alves (Pedido #101)', amount: 890.00, is_paid: true, created_at: new Date(Date.now() - 86400000).toISOString() }
                 ];
-                renderizarTabela(mockData);
-                atualizarCards(mockData);
             }
+            renderizarTabela(transacoesAtuais);
+            atualizarCards(transacoesAtuais);
         }
 
         function renderizarTabela(transacoes) {
             const tbody = document.getElementById('tabela-transacoes');
             tbody.innerHTML = '';
-            
-            if(transacoes.length === 0) {
+
+            if (transacoes.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Nenhuma transação encontrada.</td></tr>';
                 return;
             }
 
             transacoes.forEach(t => {
                 const isPaid = t.is_paid;
-                const statusHtml = isPaid 
-                    ? `<span class="badge pago">Pago</span>` 
+                const statusHtml = isPaid
+                    ? `<span class="badge pago">Pago</span>`
                     : `<span class="badge pendente">Pendente</span>`;
-                
+
                 const dataFormatada = new Date(t.created_at).toLocaleDateString('pt-BR', {
-                    day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit'
+                    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                 });
 
-                const idCurto = t.id.substring(0, 8);
+                const idCurto = t.id ? t.id.substring(0, 8) : '00000000';
 
                 tbody.innerHTML += `
                     <tr>
@@ -567,7 +645,7 @@
 
             transacoes.forEach(t => {
                 somaValores += parseFloat(t.amount);
-                if(t.is_paid) {
+                if (t.is_paid) {
                     totalRecebido += parseFloat(t.amount);
                 } else {
                     pendentes++;
@@ -582,37 +660,81 @@
         }
 
         function abrirModal() { document.getElementById('modal').style.display = 'flex'; }
-        
+
         function fecharModal() {
             document.getElementById('modal').style.display = 'none';
-            document.getElementById('cliente').value = '';
-            document.getElementById('valor').value = '';
+            // Se existir os campos, limpa
+            if (document.getElementById('cliente')) {
+                document.getElementById('cliente').value = '';
+                document.getElementById('valor').value = '';
+            }
         }
 
         async function gerarCobranca() {
             const nome = document.getElementById('cliente').value;
             const valor = parseFloat(document.getElementById('valor').value);
-            if(!nome || isNaN(valor)) { alert("Preencha todos os campos corretamente."); return; }
+            if (!nome || isNaN(valor)) { alert("Preencha todos os campos corretamente."); return; }
+
+            const novaTransacao = {
+                id: crypto.randomUUID(),
+                name: nome,
+                amount: valor,
+                is_paid: false,
+                created_at: new Date().toISOString()
+            };
+
+            // Atualiza a interface do modal para mostrar o QR Code
+            const modalBody = document.querySelector('.modal');
+            modalBody.innerHTML = `
+                <h2 style="color: var(--success); text-align: center;">Cobrança Gerada!</h2>
+                <div style="text-align: center; margin: 1.5rem 0;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mepaga_${novaTransacao.id}" alt="QR Code" style="border-radius: 10px; border: 4px solid white;">
+                    <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.95rem;">Mostre ou envie este QR Code para <strong>${nome}</strong></p>
+                </div>
+                <button class="btn" style="width: 100%;" onclick="fecharModalQRAposGerar()">Concluir e Fechar</button>
+            `;
 
             try {
+                // Tenta inserir no supabase, se o RLS bloquear, pelo menos mostra na tela
                 await supabase.from('bills').insert([
                     { name: nome, amount: valor, is_paid: false, due_date: new Date().toISOString() }
                 ]);
-            } catch(e) {}
-            
-            alert(`Cobrança de R$ ${valor.toFixed(2)} para ${nome} gerada com sucesso!`);
+            } catch (e) { }
+
+            // Adiciona localmente na tabela e nos cards sem recarregar a página
+            transacoesAtuais.unshift(novaTransacao);
+            renderizarTabela(transacoesAtuais);
+            atualizarCards(transacoesAtuais);
+        }
+
+        function fecharModalQRAposGerar() {
             fecharModal();
-            carregarTransacoes();
-            setTimeout(() => location.reload(), 1500); 
+            // Restaura o HTML do modal para poder gerar nova cobrança novamente
+            setTimeout(() => {
+                document.querySelector('.modal').innerHTML = `
+            <h2>Gerar Nova Cobrança</h2>
+            <div class="form-group">
+                <label for="cliente">Nome do Cliente</label>
+                <input type="text" id="cliente" placeholder="Ex: João Silva">
+            </div>
+            <div class="form-group">
+                <label for="valor">Valor (R$)</label>
+                <input type="number" id="valor" step="0.01" placeholder="0.00">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+                <button class="btn" onclick="gerarCobranca()">Gerar QR Code</button>
+            </div>
+                `;
+            }, 300);
         }
 
         // Chart.js Setup
         let chartInstance = null;
         function renderChart() {
             const ctx = document.getElementById('salesChart').getContext('2d');
-            if(chartInstance) return; // already rendered
+            if (chartInstance) return;
 
-            // Mock data for the chart to show progression over the last 7 days
             const labels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
             const data = [1200, 1900, 800, 2400, 3100, 1500, 2100];
 
@@ -659,4 +781,5 @@
         carregarTransacoes();
     </script>
 </body>
+
 </html>
