@@ -271,45 +271,12 @@
             }
         }
 
-        async function realizarLogin(e) {
+        function realizarLogin(e) {
             e.preventDefault();
             const btn = e.target.querySelector('.btn');
-            const originalText = btn.innerText;
             btn.innerText = "Aguarde...";
 
-            const email = e.target.querySelector('input[type="email"]').value;
-            const password = e.target.querySelector('input[type="password"]').value;
-            const nomeInput = e.target.querySelector('input[type="text"]');
-
-            if (nomeInput) {
-                // É o form de cadastro
-                const nome = nomeInput.value;
-                try {
-                    const { data, error } = await supabase.auth.signUp({
-                        email: email,
-                        password: password,
-                        options: { data: { name: nome } }
-                    });
-                    if (error) {
-                        console.error(error);
-                        // Ignora o erro na demonstração visual
-                    } else {
-                        // Tenta salvar o usuário na tabela public.users manualmente, 
-                        // pois a trigger pode não existir, embora a migration diga "Create users table"
-                        await supabase.from('users').insert([{ id: data.user.id, email: email, name: nome }]);
-                    }
-                } catch(e) {}
-            } else {
-                // É o form de login
-                try {
-                    const { error } = await supabase.auth.signInWithPassword({
-                        email: email,
-                        password: password
-                    });
-                } catch(e) {}
-            }
-            
-            // Independente de falha de conexão (já que estamos rodando mock também), avança para a dashboard
+            // Simula o login e avança para a dashboard ignorando o banco de dados
             setTimeout(() => {
                 window.location.href = "dashboard.html";
             }, 800);
