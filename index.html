@@ -456,6 +456,54 @@
             font-size: 1rem;
         }
 
+        /* Pricing Section */
+        .pricing { padding: 6rem 5%; background: var(--gray); }
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+        .pricing-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            position: relative;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px -10px rgba(249, 115, 22, 0.15);
+        }
+        .pricing-card h3 { color: var(--dark); font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .pricing-price { font-size: 2.5rem; font-weight: 800; color: var(--dark); margin-bottom: 0.5rem; }
+        .pricing-price span { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+        .pricing-features { margin: 2rem 0; text-align: left; list-style: none; flex: 1;}
+        .pricing-features li { margin-bottom: 1rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;}
+        .pricing-features li svg { width: 18px; height: 18px; stroke: var(--primary); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink:0; }
+        .pricing-btn {
+            display: block; width: 100%; padding: 1rem; border-radius: 12px; font-weight: 600; text-decoration: none;
+            background: var(--white); color: var(--text); border: 1px solid var(--border); transition: all 0.3s;
+        }
+        .pricing-card:hover .pricing-btn { background: var(--primary); color: white; border-color: var(--primary); }
+        .margin-tag {
+            font-size: 0.75rem; color: var(--text-muted); margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1rem;
+        }
+        .pricing-card.popular { border-color: var(--primary); box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1); }
+        .pricing-card.popular::before {
+            content: 'Mais Escolhido'; position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%);
+            background: var(--primary); color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+        }
+        .pricing-card.popular .pricing-btn { background: var(--primary); color: white; border-color: var(--primary); }
+        .pricing-card.popular:hover .pricing-btn { background: var(--primary-dark); border-color: var(--primary-dark); }
+
         /* Como Funciona Section */
         .how-it-works {
             padding: 8rem 5%;
@@ -661,6 +709,7 @@
         <div class="nav-links">
             <a href="#como-funciona">Como Funciona</a>
             <a href="#vantagens">Vantagens</a>
+            <a href="#planos">Planos</a>
             <a href="documentacao.html">Para Devs</a>
         </div>
         <div class="nav-actions">
@@ -782,6 +831,69 @@
                 </div>
                 <h3>Pronto para Devs</h3>
                 <p>Nossa API Restful e sistema de Webhooks foram desenhados com a mentalidade <i>developer-first</i>. Integre com Chatwoot, Typebot ou seu ERP em minutos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="planos" class="pricing">
+        <h2 class="section-title">Planos Transparentes</h2>
+        <p class="section-subtitle">Escolha o plano ideal para a sua esteira de vendas e cresça com segurança.</p>
+        
+        <div class="pricing-container">
+            <!-- Essencial -->
+            <div class="pricing-card">
+                <h3>Essencial</h3>
+                <div class="pricing-price">R$ 297<span>/mês</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Ideal para quem está começando.</p>
+                <ul class="pricing-features">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Até 100 transações/mês</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Anti-Fraude Nativo</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Suporte por E-mail</li>
+                </ul>
+                <a href="login.html" class="pricing-btn">Assinar Essencial</a>
+                <div class="margin-tag">Margem bruta aprox: 49%</div>
+            </div>
+
+            <!-- Profissional -->
+            <div class="pricing-card popular">
+                <h3>Profissional</h3>
+                <div class="pricing-price">R$ 1.497<span>/mês</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Para negócios em aceleração.</p>
+                <ul class="pricing-features">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Até 500 transações/mês</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Integração com Webhooks</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Suporte via WhatsApp</li>
+                </ul>
+                <a href="login.html" class="pricing-btn">Assinar Profissional</a>
+                <div class="margin-tag">Margem bruta aprox: 50%</div>
+            </div>
+
+            <!-- Scale -->
+            <div class="pricing-card">
+                <h3>Scale</h3>
+                <div class="pricing-price">R$ 2.997<span>/mês</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Para alto volume e escala.</p>
+                <ul class="pricing-features">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Até 1.000 transações/mês</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Conciliação Bancária Avançada</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Gerente de Conta Dedicado</li>
+                </ul>
+                <a href="login.html" class="pricing-btn">Assinar Scale</a>
+                <div class="margin-tag">Margem bruta aprox: 50%</div>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="pricing-price">R$ 4.997<span>/mês</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Operações massivas e customizadas.</p>
+                <ul class="pricing-features">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Até 2.500 transações/mês</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> SLAs de Alta Performance</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Suporte 24/7 Nível 3</li>
+                </ul>
+                <a href="login.html" class="pricing-btn">Falar com Consultor</a>
+                <div class="margin-tag">Margem bruta aprox: 25%</div>
             </div>
         </div>
     </section>
